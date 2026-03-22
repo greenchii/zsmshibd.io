@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>zsm是笨蛋 动画</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    .sentence {
+      position: absolute;
+      font-size: 4vw;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 2px 8px #0008, 0 0 20px #43c6ac;
+      opacity: 0.9;
+      animation: floatSentence 7s linear forwards;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+    @keyframes floatSentence {
+      0% {
+        transform: translateY(100vh) scale(1) rotate(-10deg);
+        opacity: 0.7;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.15) rotate(10deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const sentence = 'zsm是笨蛋';
+    function randomBetween(a, b) {
+      return Math.random() * (b - a) + a;
+    }
+    function createSentence() {
+      const el = document.createElement('span');
+      el.className = 'sentence';
+      el.textContent = sentence;
+      el.style.left = randomBetween(0, 70) + 'vw';
+      el.style.fontSize = randomBetween(3, 6) + 'vw';
+      el.style.animationDuration = randomBetween(5, 9) + 's';
+      el.style.opacity = randomBetween(0.7, 1);
+      el.style.color = `hsl(${randomBetween(180, 340)}, 80%, 60%)`;
+      el.style.filter = `drop-shadow(0 0 10px hsla(${randomBetween(180,340)},80%,60%,0.5))`;
+      document.body.appendChild(el);
+      el.addEventListener('animationend', () => {
+        el.remove();
+      });
+    }
+    setInterval(createSentence, 400);
+    // 初始多生成一些
+    for(let i=0;i<18;i++) setTimeout(createSentence, i*120);
+  </script>
+</body>
+</html>
